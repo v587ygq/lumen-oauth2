@@ -1,0 +1,24 @@
+{
+    "name": "v587ygq/lumen-oauth2",
+    "description": "Lumen OAuth2 framework.",
+    "keywords": ["lumen", "oauth2"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "v587ygq",
+            "email": "support@mail.v587ygq.cn"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "league/oauth2-server": "^8.0",
+        "phpseclib/phpseclib": "^2.0",
+        "symfony/psr-http-message-bridge": "^2.0",
+        "nyholm/psr7": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "V587ygq\\OAuth\\": "src"
+        }
+    }
+}
