@@ -10,5 +10,4 @@ $this->app->router->group(['prefix' => 'oauth2', 'namespace' => 'V587ygq\OAuth\H
         'uses' => 'AccessTokenController@deleteTokens',
     ]);
     $router->get('authorize', 'AuthorizeController');
-    $router->post('authorize', 'AuthorizeController@approve');
 });

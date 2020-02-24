@@ -12,7 +12,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'oauth:install
+    protected $signature = 'oauth2:install
                             {--force : Overwrite keys they already exist}
                             {--length=4096 : The length of the private key}';
 

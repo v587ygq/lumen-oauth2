@@ -16,15 +16,40 @@ use V587ygq\OAuth\Console\InstallCommand;
 class OAuthServiceProvider extends ServiceProvider
 {
     /**
+     * The date when access tokens expire.
+     *
+     * @var \DateInterval
+     */
+    private static $accessTokenExpireAt;
+
+    /**
+     * The date when refresh tokens expire.
+     *
+     * @var \DateInterval
+     */
+    private static $refreshTokenExpireAt;
+
+    /**
+     * The date when auth codes expire.
+     *
+     * @var \DateInterval
+     */
+    private static $authCodeExpireAt;
+
+    /**
      * Bootstrap the application services.
      *
      * @return void
      */
     public function boot()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/oauth2.php', 'oauth2');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'oauth2');
+
+        self::$accessTokenExpireAt = new \DateInterval(config('oauth2.access_token_ttl'));
+        self::$refreshTokenExpireAt = new \DateInterval(config('oauth2.refresh_token_ttl'));
+        self::$authCodeExpireAt = new \DateInterval(config('oauth2.auth_code_ttl'));
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -61,23 +86,23 @@ class OAuthServiceProvider extends ServiceProvider
                 env('APP_KEY')
             ), function ($server) {
                 $server->enableGrantType(
-                    $this->makeAuthCodeGrant(), new \DateInterval('PT1H')
+                    $this->makeAuthCodeGrant(), self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    new ClientCredentialsGrant, new \DateInterval('PT1H')
+                    new ClientCredentialsGrant, self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    new ImplicitGrant(new \DateInterval('PT1H')), new \DateInterval('PT1H')
+                    new ImplicitGrant(self::$accessTokenExpireAt), self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    $this->makePasswordGrant(), new \DateInterval('PT1H')
+                    $this->makePasswordGrant(), self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    $this->makeRefreshTokenGrant(), new \DateInterval('PT1H')
+                    $this->makeRefreshTokenGrant(), self::$accessTokenExpireAt
                 );
             });
         });
@@ -108,9 +133,9 @@ class OAuthServiceProvider extends ServiceProvider
         $grant = new AuthCodeGrant(
             $this->app->make(Bridge\AuthCodeRepository::class),
             $this->app->make(Bridge\RefreshTokenRepository::class),
-            new \DateInterval('PT10M')
+            self::$authCodeExpireAt
         );
-        $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+        $grant->setRefreshTokenTTL(self::$refreshTokenExpireAt);
         return $grant;
     }
 
@@ -125,7 +150,7 @@ class OAuthServiceProvider extends ServiceProvider
             $this->app->make(Bridge\UserRepository::class),
             $this->app->make(Bridge\RefreshTokenRepository::class)
         );
-        $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+        $grant->setRefreshTokenTTL(self::$refreshTokenExpireAt);
         return $grant;
     }
 
@@ -139,7 +164,7 @@ class OAuthServiceProvider extends ServiceProvider
         $repository = $this->app->make(Bridge\RefreshTokenRepository::class);
 
         return tap(new RefreshTokenGrant($repository), function ($grant) {
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+            $grant->setRefreshTokenTTL(self::$refreshTokenExpireAt);
         });
     }
 }

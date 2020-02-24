@@ -2,6 +2,7 @@
 
 ![License](https://img.shields.io/github/license/v587ygq/lumen-oauth2)
 ![GitHub issues](https://img.shields.io/github/issues/v587ygq/lumen-oauth2)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/v587ygq/lumen-oauth2)
 
 ## Requirements
 
@@ -19,13 +20,19 @@ Install the package through composer:
 composer require v587ygq/lumen-oauth2
 ```
 
+### Configure
+
 Migrate the oauth2 database:
 
 ```sh
 php artisan migrate
 ```
 
-### Configure
+Generating public and private keys
+
+```sh
+php artisan oauth2:install
+```
 
 Add the following lines to  ```bootstrap/app.php```
 
@@ -41,12 +48,27 @@ $app->routeMiddleware([
 ]);
 ```
 
+you should defind getUserEntityByUserCredentials function on your user model, e.g.
+
+```php
+class User extends Model implements AuthenticatableContract, AuthorizableContract {
+    use Authenticatable, Authorizable;
+
+    ......
+
+    public function getUserByPassword($username, $password, $type='email') {
+        // return User
+    }
+}
+```
+
 ### Installed routes
 
 This package will mounts the following routes automatically.
 
 Verb | Path | NamedRoute | Controller | Action | Middleware
 --- | --- | --- | --- | --- | ---
+get | /oauth2/authorize | | V587ygq\OAuth\Http\Controllers\AuthorizeController | __invoke |
 POST | /oauth2/token | | V587ygq\OAuth\Http\Controllers\AccessTokenController | __invoke |
 DELETE | /oauth2/token | | V587ygq\OAuth\Http\Controllers\AccessTokenController | deleteToken | V587ygq\OAuth\Http\Middleware\ResourceServerMiddleware |
 DELETE | /oauth2/tokens | | V587ygq\OAuth\Http\Controllers\AccessTokenController | deleteTokens | V587ygq\OAuth\Http\Middleware\ResourceServerMiddleware |

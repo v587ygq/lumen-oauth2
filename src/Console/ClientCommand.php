@@ -12,7 +12,7 @@ class ClientCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'oauth:client
+    protected $signature = 'oauth2:client
             {--authorization_code : Create an authorization code grant client}
             {--client_credentials : Create a client credentials grant client}
             {--implicit : Create an implicit credentials grant client}

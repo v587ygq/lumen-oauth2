@@ -1,6 +1,7 @@
 <?php
 namespace V587ygq\OAuth\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Exception\OAuthServerException;
@@ -27,27 +28,12 @@ class AuthorizeController
         $this->server = $server;
     }
 
-    public function __invoke(ServerRequestInterface $psrRequest, Request $request) {
-        $authRequest = $this->server->validateAuthorizationRequest($psrRequest);
-
-        $client = Client::find($authRequest->getClient()->getIdentifier());
-        $user = $request->user();
-        $scopes = $authRequest->getScopes();
-
-        return view('oauth2::authorize', [
-            'client' => $client,
-            'user' => $user,
-            'scopes' => $scopes,
-            'request' => $request,
-        ]);
-    }
-
-    public function approve(ServerRequestInterface $request, ResponseInterface $response) {
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response) {
         try {
             $authRequest = $this->server->validateAuthorizationRequest($request);
-            
+
             $scopes = $authRequest->getScopes();
-            $authRequest->setUser(new User(1));
+            $authRequest->setUser(new User($request->getAttributes('oauth_user_id')));
             $authRequest->setAuthorizationApproved(true);
             return $server->completeAuthorizationRequest($authRequest, $response);
         } catch (OAuthServerException $exception) {
