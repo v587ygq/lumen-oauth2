@@ -3,38 +3,20 @@ namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Entities\Traits\EntityTrait;
+use League\OAuth2\Server\Entities\Traits\ScopeTrait;
 
 class Scope implements ScopeEntityInterface
 {
-    use EntityTrait;
-
-    public static $scopes = [];
+    use EntityTrait, ScopeTrait;
 
     /**
-     * Scope constructor.
-     * @param $name
+     * Create a new scope instance.
+     *
+     * @param  string  $name
+     * @return void
      */
     public function __construct($name)
     {
         $this->setIdentifier($name);
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public static function hasScope($id)
-    {
-        return $id === '*' || array_key_exists($id, static::$scopes);
-    }
-
-    /**
-     * Get the data that should be serialized to JSON.
-     *
-     * @return mixed
-     */
-    public function jsonSerialize()
-    {
-        return $this->getIdentifier();
     }
 }

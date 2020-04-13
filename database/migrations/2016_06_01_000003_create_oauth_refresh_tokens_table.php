@@ -16,7 +16,7 @@ class CreateOauthRefreshTokensTable extends Migration
             $table->string('id')->primary();
             $table->string('access_token_id')->unique();
             $table->boolean('revoked');
-            $table->dateTime('expires_at')->nullable();
+            $table->dateTime('expires_at');
 
             $table->foreign('access_token_id')->references('id')->on('oauth_access_tokens')->onDelete('cascade');
         });

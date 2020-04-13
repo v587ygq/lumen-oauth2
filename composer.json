@@ -20,5 +20,11 @@
         "psr-4": {
             "V587ygq\\OAuth\\": "src"
         }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }

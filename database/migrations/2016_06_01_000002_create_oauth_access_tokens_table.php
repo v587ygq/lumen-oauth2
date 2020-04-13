@@ -14,14 +14,11 @@ class CreateOauthAccessTokensTable extends Migration
     {
         Schema::create('oauth_access_tokens', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->unsignedBigInteger('user_id')->nullable()->index();
-            $table->unsignedBigInteger('client_id');
+            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('client_id')->constrained('oauth_clients')->onDelete('cascade');
             $table->text('scopes')->nullable();
             $table->boolean('revoked');
-            $table->timestamps();
-            $table->dateTime('expires_at')->nullable();
-
-            $table->foreign('client_id')->references('id')->on('oauth_clients')->onDelete('cascade');
+            $table->dateTime('expires_at');
         });
     }
 

@@ -53,6 +53,13 @@ class AccessToken extends Model
     ];
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the client that the token belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -69,6 +76,6 @@ class AccessToken extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(config('oauth2.user_model'));
     }
 }

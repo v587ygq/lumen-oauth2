@@ -13,12 +13,13 @@ class CreateOauthClientsTable extends Migration
     public function up()
     {
         Schema::create('oauth_clients', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable()->index();
+            $table->id();
+            $table->foreignId('user_id')->nullable()->index();
             $table->string('name');
             $table->string('secret')->nullable();
             $table->text('redirect')->nullable();
             $table->string('grant_type');
+            $table->boolean('confidential')->nullable();
             $table->boolean('revoked');
             $table->timestamps();
         });

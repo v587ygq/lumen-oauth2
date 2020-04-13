@@ -35,14 +35,12 @@ class Client extends Model
      * @var array
      */
     protected $casts = [
-        'grant_types' => 'array',
-        'personal_access_client' => 'bool',
-        'password_client' => 'bool',
+        'confidential' => 'bool',
         'revoked' => 'bool',
     ];
 
     /**
-     * 设置用户的姓名.
+     * Set the client secret.
      *
      * @param  string  $value
      * @return void
@@ -59,7 +57,7 @@ class Client extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(config('oauth2.user_model'));
     }
 
     /**

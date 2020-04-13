@@ -6,9 +6,9 @@
 
 ## Requirements
 
-- PHP 7.0 or newer
+- PHP 7.2 or newer
 - [Composer](http://getcomposer.org)
-- [Lumen](https://lumen.laravel.com/) 6.0 or newer
+- [Lumen](https://lumen.laravel.com/) 7.0 or newer
 
 ## Usage
 
@@ -56,7 +56,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     ......
 
-    public function getUserByPassword($username, $password, $type='email') {
+    public function getUserByPassword($username, $password) {
         // return User
     }
 }

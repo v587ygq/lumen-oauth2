@@ -13,6 +13,13 @@ class AuthCode extends Model
     protected $table = 'oauth_auth_codes';
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -32,6 +39,7 @@ class AuthCode extends Model
      * @var array
      */
     protected $casts = [
+        'scopes' => 'array',
         'revoked' => 'bool',
     ];
 
@@ -50,13 +58,6 @@ class AuthCode extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
 
     /**
      * Get the client that owns the authentication code.

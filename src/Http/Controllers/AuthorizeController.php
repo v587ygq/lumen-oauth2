@@ -1,14 +1,11 @@
 <?php
 namespace V587ygq\OAuth\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use V587ygq\OAuth\Bridge\User;
-use V587ygq\OAuth\Models\Client;
 
 class AuthorizeController
 {
@@ -30,16 +27,26 @@ class AuthorizeController
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response) {
         try {
+
+            // Validate the HTTP request and return an AuthorizationRequest object.
             $authRequest = $this->server->validateAuthorizationRequest($request);
 
-            $scopes = $authRequest->getScopes();
-            $authRequest->setUser(new User($request->getAttributes('oauth_user_id')));
+            // Once the user has logged in set the user on the AuthorizationRequest
+            $authRequest->setUser(new User(1));
+
+            // (true = approved, false = denied)
             $authRequest->setAuthorizationApproved(true);
-            return $server->completeAuthorizationRequest($authRequest, $response);
+
+            // Return the HTTP redirect response
+            return $this->server->completeAuthorizationRequest($authRequest, $response);
+
         } catch (OAuthServerException $exception) {
+
+            // All instances of OAuthServerException can be formatted into a HTTP response
             return $exception->generateHttpResponse($response);
+
         } catch (\Exception $exception) {
-            return $response;
+            throw $exception;
         }
     }
 }

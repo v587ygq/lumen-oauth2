@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Hash;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use V587ygq\OAuth\Models\Client as ClientModel;
 
-class ClientRepository implements ClientRepositoryInterface {
+class ClientRepository implements ClientRepositoryInterface
+{
     /**
      * {@inheritdoc}
      */
@@ -17,8 +18,7 @@ class ClientRepository implements ClientRepositoryInterface {
             return;
         }
 
-        $oauthClient = new Client($clientIdentifier, $client->name, $client->redirect);
-        return $oauthClient;
+        return new Client($clientIdentifier, $client->name, $client->redirect, $client->confidential);
     }
 
     /**

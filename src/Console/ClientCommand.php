@@ -2,6 +2,7 @@
 namespace V587ygq\OAuth\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use V587ygq\OAuth\Models\Client;
 
@@ -44,7 +45,7 @@ class ClientCommand extends Command
         } elseif ($this->option('password')) {
             $this->createPasswordClient();
         } else {
-            $this->error('need a grant type');
+            $this->error('Not enough arguments (missing: "type")');
         }
     }
 
@@ -55,7 +56,22 @@ class ClientCommand extends Command
      */
     protected function createAuthorizationCodeClient()
     {
-        //
+        $name = $this->option('name') ?: $this->ask('What should we name the client?');
+        $redirect = $this->option('redirect_uri') ?: $this->ask('Where should we redirect the request after authorization?');
+        $confidential = $this->confirm('Is it a confidential client?') ? true : false;
+        $secret = Str::random(40);
+        $client = Client::create([
+            'name' => $name,
+            'redirect' => $redirect,
+            'secret' => $secret,
+            'grant_type' => 'authorization_code',
+            'confidential' => $confidential,
+            'revoked' => false,
+        ]);
+
+        $this->info('Implicit grant client created successfully.');
+        $this->line('<comment>Client ID:</comment> '.$client->id);
+        $this->line('<comment>Client secret:</comment> '.$secret);
     }
 
     /**

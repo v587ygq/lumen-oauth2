@@ -8,11 +8,18 @@ use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 class ScopeRepository implements ScopeRepositoryInterface
 {
     /**
+     * All of the scopes defined for the application.
+     *
+     * @var array
+     */
+    public static $scopes = [];
+
+    /**
      * {@inheritdoc}
      */
     public function getScopeEntityByIdentifier($identifier)
     {
-        if (Scope::hasScope($identifier)) {
+        if($identifier === '*' || array_key_exists($identifier, static::$scopes)) {
             return new Scope($identifier);
         }
     }
@@ -22,14 +29,6 @@ class ScopeRepository implements ScopeRepositoryInterface
      */
     public function finalizeScopes(array $scopes, $grantType, ClientEntityInterface $clientEntity, $userIdentifier = null)
     {
-        if (! in_array($grantType, ['password', 'personal_access', 'client_credentials'])) {
-            $scopes = collect($scopes)->reject(function ($scope) {
-                return trim($scope->getIdentifier()) === '*';
-            })->values()->all();
-        }
-
-        return collect($scopes)->filter(function ($scope) {
-            return Scope::hasScope($scope->getIdentifier());
-        })->values()->all();
+        return $scopes;
     }
 }
