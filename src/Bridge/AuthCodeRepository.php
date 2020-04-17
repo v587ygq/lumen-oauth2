@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
@@ -12,7 +13,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
      */
     public function getNewAuthCode()
     {
-        return new AuthCode;
+        return new AuthCode();
     }
 
     /**
@@ -43,7 +44,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
      */
     public function isAuthCodeRevoked($codeId)
     {
-        if(AuthCodeModel::find($codeId)->where('revoked', 0)->exists()) {
+        if (AuthCodeModel::find($codeId)->where('revoked', 0)->exists()) {
             return false;
         }
 

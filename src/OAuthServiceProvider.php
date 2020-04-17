@@ -1,9 +1,10 @@
 <?php
+
 namespace V587ygq\OAuth;
 
 use Illuminate\Support\ServiceProvider;
-use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\AuthorizationServer;
+use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\ImplicitGrant;
@@ -86,23 +87,28 @@ class OAuthServiceProvider extends ServiceProvider
                 env('APP_KEY')
             ), function ($server) {
                 $server->enableGrantType(
-                    $this->makeAuthCodeGrant(), self::$accessTokenExpireAt
+                    $this->makeAuthCodeGrant(),
+                    self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    new ClientCredentialsGrant, self::$accessTokenExpireAt
+                    new ClientCredentialsGrant(),
+                    self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    new ImplicitGrant(self::$accessTokenExpireAt), self::$accessTokenExpireAt
+                    new ImplicitGrant(self::$accessTokenExpireAt),
+                    self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    $this->makePasswordGrant(), self::$accessTokenExpireAt
+                    $this->makePasswordGrant(),
+                    self::$accessTokenExpireAt
                 );
 
                 $server->enableGrantType(
-                    $this->makeRefreshTokenGrant(), self::$accessTokenExpireAt
+                    $this->makeRefreshTokenGrant(),
+                    self::$accessTokenExpireAt
                 );
             });
         });
@@ -136,6 +142,7 @@ class OAuthServiceProvider extends ServiceProvider
             self::$authCodeExpireAt
         );
         $grant->setRefreshTokenTTL(self::$refreshTokenExpireAt);
+
         return $grant;
     }
 
@@ -151,6 +158,7 @@ class OAuthServiceProvider extends ServiceProvider
             $this->app->make(Bridge\RefreshTokenRepository::class)
         );
         $grant->setRefreshTokenTTL(self::$refreshTokenExpireAt);
+
         return $grant;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;

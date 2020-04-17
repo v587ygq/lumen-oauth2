@@ -1,8 +1,8 @@
 <?php
+
 namespace V587ygq\OAuth\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use V587ygq\OAuth\Models\Client;
 
@@ -31,7 +31,8 @@ class ClientCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  \Laravel\Passport\ClientRepository  $clients
+     * @param \Laravel\Passport\ClientRepository $clients
+     *
      * @return void
      */
     public function handle()

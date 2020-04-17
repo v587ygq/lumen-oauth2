@@ -1,4 +1,5 @@
 <?php
+
 $this->app->router->group(['prefix' => 'oauth2', 'namespace' => 'V587ygq\OAuth\Http\Controllers'], function ($router) {
     $router->post('token', 'AccessTokenController');
     $router->delete('token', [

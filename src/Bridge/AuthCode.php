@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
@@ -8,5 +9,7 @@ use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
 
 class AuthCode implements AuthCodeEntityInterface
 {
-    use AuthCodeTrait, EntityTrait, TokenEntityTrait;
+    use AuthCodeTrait;
+    use EntityTrait;
+    use TokenEntityTrait;
 }

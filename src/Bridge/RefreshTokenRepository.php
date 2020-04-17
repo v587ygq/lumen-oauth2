@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
@@ -12,7 +13,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function getNewRefreshToken()
     {
-        return new RefreshToken;
+        return new RefreshToken();
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 
 class ScopeRepository implements ScopeRepositoryInterface
@@ -19,7 +19,7 @@ class ScopeRepository implements ScopeRepositoryInterface
      */
     public function getScopeEntityByIdentifier($identifier)
     {
-        if($identifier === '*' || array_key_exists($identifier, static::$scopes)) {
+        if ('*' === $identifier || array_key_exists($identifier, static::$scopes)) {
             return new Scope($identifier);
         }
     }

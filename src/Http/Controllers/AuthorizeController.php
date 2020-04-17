@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Http\Controllers;
 
 use League\OAuth2\Server\AuthorizationServer;
@@ -17,7 +18,6 @@ class AuthorizeController
     /**
      * Create a new controller instance.
      *
-     * @param  \League\OAuth2\Server\AuthorizationServer  $server
      * @return void
      */
     public function __construct(AuthorizationServer $server)
@@ -25,9 +25,9 @@ class AuthorizeController
         $this->server = $server;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response) {
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
+    {
         try {
-
             // Validate the HTTP request and return an AuthorizationRequest object.
             $authRequest = $this->server->validateAuthorizationRequest($request);
 
@@ -39,12 +39,9 @@ class AuthorizeController
 
             // Return the HTTP redirect response
             return $this->server->completeAuthorizationRequest($authRequest, $response);
-
         } catch (OAuthServerException $exception) {
-
             // All instances of OAuthServerException can be formatted into a HTTP response
             return $exception->generateHttpResponse($response);
-
         } catch (\Exception $exception) {
             throw $exception;
         }

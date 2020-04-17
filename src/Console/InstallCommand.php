@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Console;
 
 use Illuminate\Console\Command;
@@ -32,7 +33,7 @@ class InstallCommand extends Command
     {
         [$publicKey, $privateKey] = [base_path().'/oauth-public.key', base_path().'/oauth-private.key'];
 
-        if ((file_exists($publicKey) || file_exists($privateKey)) && ! $this->option('force')) {
+        if ((file_exists($publicKey) || file_exists($privateKey)) && !$this->option('force')) {
             $this->error('Encryption keys already exist. Use the --force option to overwrite them.');
         } else {
             $keys = $rsa->createKey($this->input ? (int) $this->option('length') : 4096);

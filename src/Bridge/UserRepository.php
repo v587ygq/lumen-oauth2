@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -16,7 +17,7 @@ class UserRepository implements UserRepositoryInterface
             throw new RuntimeException('Unable to determine authentication model from configuration.');
         }
 
-        $user = (new $model)->getUserByPassword($username, $password);
+        $user = (new $model())->getUserByPassword($username, $password);
 
         return !$user ?: new User($user->getAuthIdentifier());
     }

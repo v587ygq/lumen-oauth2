@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Access Token TTL
@@ -43,5 +42,5 @@ return [
     |
     */
 
-    'user_model' => env('OAUTH2_USER_MODEL', 'App\User')
+    'user_model' => env('OAUTH2_USER_MODEL', 'App\User'),
 ];

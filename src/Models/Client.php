@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +43,8 @@ class Client extends Model
     /**
      * Set the client secret.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return void
      */
     public function setSecretAttribute($value)

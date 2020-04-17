@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class ClientRepository implements ClientRepositoryInterface
     {
         $client = ClientModel::find($clientIdentifier);
 
-        if(! $client || $client->revoked) {
+        if (!$client || $client->revoked) {
             return;
         }
 
@@ -30,6 +31,7 @@ class ClientRepository implements ClientRepositoryInterface
         if ($client && $client->grant_type === $grantType && Hash::check($clientSecret, $client->secret)) {
             return true;
         }
+
         return false;
     }
 }

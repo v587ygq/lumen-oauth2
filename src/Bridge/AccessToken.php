@@ -1,4 +1,5 @@
 <?php
+
 namespace V587ygq\OAuth\Bridge;
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
@@ -9,14 +10,15 @@ use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
 
 class AccessToken implements AccessTokenEntityInterface
 {
-    use AccessTokenTrait, EntityTrait, TokenEntityTrait;
+    use AccessTokenTrait;
+    use EntityTrait;
+    use TokenEntityTrait;
 
     /**
      * Create a new token instance.
      *
-     * @param  string  $userIdentifier
-     * @param  array  $scopes
-     * @param  \League\OAuth2\Server\Entities\ClientEntityInterface  $client
+     * @param string $userIdentifier
+     *
      * @return void
      */
     public function __construct($userIdentifier, array $scopes, ClientEntityInterface $client)
