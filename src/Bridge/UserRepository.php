@@ -13,7 +13,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function getUserEntityByUserCredentials($username, $password, $grantType, ClientEntityInterface $clientEntity)
     {
-        if (is_null($model = config('oauth2.user_model'))) {
+        if (null === ($model = config('oauth2.user_model'))) {
             throw new RuntimeException('Unable to determine authentication model from configuration.');
         }
 

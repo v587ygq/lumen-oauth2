@@ -19,7 +19,7 @@ class ScopeRepository implements ScopeRepositoryInterface
      */
     public function getScopeEntityByIdentifier($identifier)
     {
-        if ('*' === $identifier || array_key_exists($identifier, static::$scopes)) {
+        if ('*' === $identifier || \array_key_exists($identifier, static::$scopes)) {
             return new Scope($identifier);
         }
     }

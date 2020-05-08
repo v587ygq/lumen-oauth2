@@ -31,7 +31,7 @@ class InstallCommand extends Command
      */
     public function handle(RSA $rsa)
     {
-        [$publicKey, $privateKey] = [base_path().'/oauth-public.key', base_path().'/oauth-private.key'];
+        [$publicKey, $privateKey] = [storage_path('app/oauth-public.key'), storage_path('app/oauth-private.key')];
 
         if ((file_exists($publicKey) || file_exists($privateKey)) && !$this->option('force')) {
             $this->error('Encryption keys already exist. Use the --force option to overwrite them.');

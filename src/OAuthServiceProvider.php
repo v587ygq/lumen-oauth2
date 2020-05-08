@@ -83,7 +83,7 @@ class OAuthServiceProvider extends ServiceProvider
                 $this->app->make(Bridge\ClientRepository::class),
                 $this->app->make(Bridge\AccessTokenRepository::class),
                 $this->app->make(Bridge\ScopeRepository::class),
-                new CryptKey(base_path().'/oauth-private.key', null, false),
+                new CryptKey(storage_path('app/oauth-private.key'), null, false),
                 env('APP_KEY')
             ), function ($server) {
                 $server->enableGrantType(
@@ -124,7 +124,7 @@ class OAuthServiceProvider extends ServiceProvider
         $this->app->singleton(ResourceServer::class, function () {
             return new ResourceServer(
                 $this->app->make(Bridge\AccessTokenRepository::class),
-                new CryptKey(base_path().'/oauth-public.key', null, false)
+                new CryptKey(storage_path('app/oauth-public.key'), null, false)
             );
         });
     }
